@@ -3,9 +3,9 @@ package com.jibo.animationdemo.bean;
 import com.jibo.animationdemo.common.MyPoint;
 
 /**
- * Created by acer on 2016/11/9.
+ * Created by cuiqiang on 2016/11/9.
+ * @author cuiqiang
  */
-
 public class PointsBean {
 
     //身体相关参数

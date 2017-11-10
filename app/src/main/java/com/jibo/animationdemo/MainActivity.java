@@ -17,6 +17,10 @@ import android.widget.RelativeLayout;
 
 import com.jibo.animationdemo.ui.MovePicAct;
 
+/**
+ * Created by cuiqiang on 2016/11/6.
+ * @author cuiqiang
+ */
 public class MainActivity extends AppCompatActivity {
 
     private static final int SENSOR_SHAKE = 10;
@@ -83,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 mVibrator.vibrate(200);
                 Message msg = new Message();
                 msg.what = SENSOR_SHAKE;
-                handler.sendMessage(msg);
+                mHandler.sendMessage(msg);
             }
         }
 
@@ -95,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 动作执行
      */
-    Handler handler = new Handler() {
+    Handler mHandler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
@@ -104,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
                 case SENSOR_SHAKE:
                     animatorBg();
                     break;
+                default:
+                    break;
             }
         }
 
@@ -111,61 +117,73 @@ public class MainActivity extends AppCompatActivity {
 
     private void animatorBg() {
         new Handler().postDelayed(new Runnable() {
+            @Override
             public void run() {
                 rlMain.setBackgroundColor(Color.BLUE);
             }
         }, 100);
         new Handler().postDelayed(new Runnable() {
+            @Override
             public void run() {
                 rlMain.setBackgroundColor(Color.YELLOW);
             }
         }, 200);
         new Handler().postDelayed(new Runnable() {
+            @Override
             public void run() {
                 rlMain.setBackgroundColor(Color.GREEN);
             }
         }, 300);
         new Handler().postDelayed(new Runnable() {
+            @Override
             public void run() {
                 rlMain.setBackgroundColor(Color.BLUE);
             }
         }, 400);
         new Handler().postDelayed(new Runnable() {
+            @Override
             public void run() {
                 rlMain.setBackgroundColor(Color.YELLOW);
             }
         }, 500);
         new Handler().postDelayed(new Runnable() {
+            @Override
             public void run() {
                 rlMain.setBackgroundColor(Color.GREEN);
             }
         }, 600);
         new Handler().postDelayed(new Runnable() {
+            @Override
             public void run() {
                 rlMain.setBackgroundColor(Color.YELLOW);
             }
         }, 700);
         new Handler().postDelayed(new Runnable() {
+            @Override
             public void run() {
                 rlMain.setBackgroundColor(Color.GREEN);
             }
         }, 800);
         new Handler().postDelayed(new Runnable() {
+            @Override
             public void run() {
                 rlMain.setBackgroundColor(Color.BLUE);
             }
         }, 900);
         new Handler().postDelayed(new Runnable() {
+            @Override
             public void run() {
                 rlMain.setBackgroundColor(Color.YELLOW);
             }
         }, 1000);
         new Handler().postDelayed(new Runnable() {
+            @Override
             public void run() {
                 rlMain.setBackgroundColor(Color.GREEN);
             }
         }, 1100);
         new Handler().postDelayed(new Runnable() {
+            @Override
             public void run() {
                 rlMain.setBackgroundColor(Color.WHITE);
             }

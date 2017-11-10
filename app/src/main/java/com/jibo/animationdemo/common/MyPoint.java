@@ -3,9 +3,9 @@ package com.jibo.animationdemo.common;
 import android.graphics.Point;
 
 /**
- * Created by acer on 2016/11/9.
+ * Created by cuiqiang on 2016/11/9.
+ * @author cuiqiang
  */
-
 public class MyPoint extends Point {
 
     public int ox;//用于记录原始坐标x

@@ -30,6 +30,7 @@ public class JiboView extends ImageView {
 
     }
 
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
         // 获取手指按下的坐标
         int x = (int) event.getRawX();

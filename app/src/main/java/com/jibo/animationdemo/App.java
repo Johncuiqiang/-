@@ -6,8 +6,8 @@ import android.os.Handler;
 
 /**
  * Created by cuiqiang on 2016/11/6.
+ * @author cuiqiang
  */
-
 public class App extends Application {
 
 

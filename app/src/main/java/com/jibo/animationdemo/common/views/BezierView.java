@@ -19,11 +19,12 @@ import com.jibo.animationdemo.utils.UIUtils;
 import java.util.ArrayList;
 
 /**
- * Created by acer on 2016/11/6.
+ * Created by cuiqiang on 2016/11/6.
+ * @author cuiqiang
  */
-
 public class BezierView extends View {
 
+    private static final String TAG  =  "body";
     //移动的最大范围
     private static int LEFT_SCROLL_EDGE;
     private static int RIGHT_SCROLL_EDGE;
@@ -31,7 +32,6 @@ public class BezierView extends View {
     private static int DOWN_SCROLL_BODY_DEGE;
     private static int UP_SCROLL_EYE;
     private static int DOWN_SCROLL_EYE;
-
     //贝塞尔曲线相关参数
     private MyPoint mStartPointLeft;
     private MyPoint mStartPointRight;
@@ -47,11 +47,10 @@ public class BezierView extends View {
     private MyPoint mRightEyeBallPoint;
     private MyPoint mNosePoint;
 
-    private String TAG = "pppp";
     private Paint mPaint;
     private Path mPath;
     private DecelerateInterpolator mInterpolator;
-    private PointsBean bean;
+    private PointsBean mBean;
     private ArrayList<MyPoint> mResetList;//需要重置的点的集合
 
     private int mBodyColor = 0xffffaa22;
@@ -111,20 +110,20 @@ public class BezierView extends View {
 
     private void initPoint(float mScreenWidth, float mScreenHeight) {
 
-        bean = new PointsBean(mScreenWidth, mScreenHeight);
-        mStartPointLeft = bean.getStartPointLeft();
-        mStartPointRight = bean.getStartPointRight();
-        mAssistPointLeft = bean.getAssistPointLeft();
-        mAssistPointRight = bean.getAssistPointRight();
-        mEndPointLeft = bean.getEndPointLeft();
-        mEndPointRight = bean.getEndPointRight();
-        mCirclePoint = bean.getCirclePoint();
-        mCircleR = bean.getCircleR();
-        mLeftEyePoint = bean.getLeftEyePoint();
-        mRightEyePoint = bean.getRightEyePoint();
-        mLeftEyeBallPoint = bean.getLeftEyeBallPoint();
-        mRightEyeBallPoint = bean.getRightEyeBallPoint();
-        mNosePoint = bean.getNosePoint();
+        mBean = new PointsBean(mScreenWidth, mScreenHeight);
+        mStartPointLeft = mBean.getStartPointLeft();
+        mStartPointRight = mBean.getStartPointRight();
+        mAssistPointLeft = mBean.getAssistPointLeft();
+        mAssistPointRight = mBean.getAssistPointRight();
+        mEndPointLeft = mBean.getEndPointLeft();
+        mEndPointRight = mBean.getEndPointRight();
+        mCirclePoint = mBean.getCirclePoint();
+        mCircleR = mBean.getCircleR();
+        mLeftEyePoint = mBean.getLeftEyePoint();
+        mRightEyePoint = mBean.getRightEyePoint();
+        mLeftEyeBallPoint = mBean.getLeftEyeBallPoint();
+        mRightEyeBallPoint = mBean.getRightEyeBallPoint();
+        mNosePoint = mBean.getNosePoint();
 
         mResetList = new ArrayList<>();
         mResetList.add(mStartPointLeft);
@@ -135,9 +134,13 @@ public class BezierView extends View {
         mResetList.add(mLeftEyeBallPoint);
         mResetList.add(mRightEyeBallPoint);
         mResetList.add(mNosePoint);
-        initSrollParams(bean);
+        initSrollParams(mBean);
     }
 
+    /**
+     * 初始化限制参数相关
+     * @param bean 初始值对象
+     */
     private void initSrollParams(PointsBean bean) {
         UP_SCROLL_BODY_DEGE = bean.getUpScrollEdge();
         DOWN_SCROLL_BODY_DEGE = bean.getDownScrollEdge();
@@ -162,11 +165,18 @@ public class BezierView extends View {
         drawNose(canvas);
     }
 
-    //画头部
+    /**
+     * 画body头部
+     * @param canvas canvas对象
+     */
     private void drawHead(Canvas canvas) {
         canvas.drawCircle(mCirclePoint.x, mCirclePoint.y, mCircleR, mPaint);
     }
 
+    /**
+     * 画body的身体
+     * @param canvas canvas对象
+     */
     private void drawBody(Canvas canvas) {
         // 重置路径
         mPath.reset();
@@ -180,6 +190,10 @@ public class BezierView extends View {
         canvas.drawPath(mPath, mPaint);
     }
 
+    /**
+     * 画眼睛
+     * @param canvas canvas对象
+     */
     private void drawEye(Canvas canvas) {
         //绘制外眼眶
         mPaint.setColor(Color.BLACK);
@@ -204,6 +218,10 @@ public class BezierView extends View {
         canvas.drawCircle(mRightEyeBallPoint.x, mRightEyeBallPoint.y - mCircleR / 24, mCircleR / 30, mPaint);
     }
 
+    /**
+     * 画鼻子
+     * @param canvas canvas对象
+     */
     private void drawNose(Canvas canvas) {
         //绘制鼻子
         mPaint.setColor(Color.BLACK);
@@ -239,6 +257,7 @@ public class BezierView extends View {
                 isPointerMove = true;
                 moveBody(event);
                 moveFace(event);
+                //重新绘制方法
                 invalidate();
                 break;
             case MotionEvent.ACTION_UP:
@@ -252,10 +271,16 @@ public class BezierView extends View {
                     reset(getValuesHolder());
                 }
                 break;
+            default:
+                break;
         }
         return true;
     }
 
+    /**
+     * 移动body的身体
+     * @param event 手指滑动事件
+     */
     private void moveBody(MotionEvent event) {
         moveY = (int) event.getRawY();
         int dy = moveY - lastY;
@@ -270,6 +295,10 @@ public class BezierView extends View {
         lastY = moveY;
     }
 
+    /**
+     * 移动body头部
+     * @param event 手指滑动事件
+     */
     private void moveFace(MotionEvent event) {
         moveEyeX = (int) event.getRawX();
         moveEyeY = (int) event.getRawY();
@@ -304,6 +333,15 @@ public class BezierView extends View {
         lastEyeY = moveEyeY;
     }
 
+    /**
+     * 得到限制距离
+     *
+     * @param allDistance    手指移动的距离
+     * @param ratio          滑动限制参数
+     * @param leftUpEdge     左限定边界
+     * @param rightDownEdge  右限定边界
+     * @return 计算后的移动距离
+     */
     private float getAllDiff(float allDistance, float ratio, int leftUpEdge, int rightDownEdge) {
         //限定边界
         if (allDistance < -ratio * leftUpEdge) {
@@ -330,7 +368,9 @@ public class BezierView extends View {
         return allDiff;
     }
 
-    //因为参数比较多，所以把原始参数和变化后的参数，存起来传到执行动画中
+    /**
+     * 因为参数比较多，所以把原始参数和变化后的参数，存起来传到执行动画中
+     */
     private PropertyValuesHolder[] getValuesHolder() {
 
         PropertyValuesHolder[] holders = new PropertyValuesHolder[mResetList.size() + mResetList.size()];
@@ -347,7 +387,10 @@ public class BezierView extends View {
         return holders;
     }
 
-    //重置回弹动画
+    /**
+     * 重置回弹动画
+     * @param holders 之前记录的原始参数
+     */
     private void reset(PropertyValuesHolder[] holders) {
         final ValueAnimator animator;// 动画器
         animator = ValueAnimator.ofPropertyValuesHolder(holders);
