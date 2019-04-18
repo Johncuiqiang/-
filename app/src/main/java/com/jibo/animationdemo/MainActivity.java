@@ -1,13 +1,10 @@
 package com.jibo.animationdemo;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Handler;
-import android.os.Message;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,11 +21,8 @@ import com.jibo.animationdemo.ui.MovePicAct;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private static final int SENSOR_SHAKE = 10;
-    private RelativeLayout rlMain;
     private Button mBtnTurn;
     private SensorManager mSensorManager;
-    private Vibrator mVibrator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +34,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        rlMain = (RelativeLayout)findViewById(R.id.activity_main);
         mBtnTurn = (Button)findViewById(R.id.bt_turn);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        mVibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-
     }
 
     private void initData() {
@@ -93,12 +84,9 @@ public class MainActivity extends AppCompatActivity {
             float z = values[2]; // z轴方向的重力加速度，向上为正
             // 一般在这三个方向的重力加速度达到40就达到了摇晃手机的状态。
             int medumValue = 19;// 三星 i9250怎么晃都不会超过20，没办法，只设置19了
-            if (Math.abs(x) > medumValue || Math.abs(y) > medumValue || Math.abs(z) > medumValue) {
-                mVibrator.vibrate(200);
-                Message msg = new Message();
-                msg.what = SENSOR_SHAKE;
-                mHandler.sendMessage(msg);
-            }
+//            if (Math.abs(x) > medumValue || Math.abs(y) > medumValue || Math.abs(z) > medumValue) {
+//
+//            }
         }
 
         @Override
@@ -106,97 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
-    /**
-     * 动作执行
-     */
-    Handler mHandler = new Handler() {
 
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case SENSOR_SHAKE:
-                    animatorBg();
-                    break;
-                default:
-                    break;
-            }
-        }
 
-    };
 
-    private void animatorBg() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                rlMain.setBackgroundColor(Color.BLUE);
-            }
-        }, 100);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                rlMain.setBackgroundColor(Color.YELLOW);
-            }
-        }, 200);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                rlMain.setBackgroundColor(Color.GREEN);
-            }
-        }, 300);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                rlMain.setBackgroundColor(Color.BLUE);
-            }
-        }, 400);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                rlMain.setBackgroundColor(Color.YELLOW);
-            }
-        }, 500);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                rlMain.setBackgroundColor(Color.GREEN);
-            }
-        }, 600);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                rlMain.setBackgroundColor(Color.YELLOW);
-            }
-        }, 700);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                rlMain.setBackgroundColor(Color.GREEN);
-            }
-        }, 800);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                rlMain.setBackgroundColor(Color.BLUE);
-            }
-        }, 900);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                rlMain.setBackgroundColor(Color.YELLOW);
-            }
-        }, 1000);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                rlMain.setBackgroundColor(Color.GREEN);
-            }
-        }, 1100);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                rlMain.setBackgroundColor(Color.WHITE);
-            }
-        }, 1200);
-    }
 }
