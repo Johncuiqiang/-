@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import com.jibo.animationdemo.floatview.FloatWindowManager;
 import com.jibo.animationdemo.ui.MovePicAct;
 
 /**
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.act_main);
         initView();
         initData();
+       // FloatWindowManager.getInstance().init(this);
     }
 
     private void initView() {
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initData() {
+        //一些移动的实验，只是为了参考代码，跟小黄鸡无关
         mBtnTurn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,6 +72,13 @@ public class MainActivity extends AppCompatActivity {
             mSensorManager.unregisterListener(sensorEventListener);
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        FloatWindowManager.getInstance().release();
+        super.onDestroy();
+    }
+
     /**
      * 重力感应监听
      */

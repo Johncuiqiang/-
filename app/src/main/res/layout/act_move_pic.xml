@@ -2,13 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_main"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <com.jibo.animationdemo.common.views.JiboView
-        android:id="@+id/bv_jibo"
+    <!--<com.jibo.animationdemo.common.views.JiboView-->
+        <!--android:id="@+id/bv_jibo"-->
+        <!--android:src="@drawable/ic_jibo"-->
+        <!--android:layout_height="80dp"-->
+        <!--android:layout_width="80dp"/>-->
+
+    <ImageButton
+        android:id="@+id/ib_jibo"
         android:src="@drawable/ic_jibo"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"/>
+        android:layout_width="80dp"
+        android:layout_height="80dp" />
 
 </RelativeLayout>
